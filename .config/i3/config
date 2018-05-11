@@ -25,8 +25,9 @@ floating_modifier $super
 #autostart
 exec --no-startup-id xsettingsd &
 exec --no-startup-id compton -b
-exec --no-startup-id ~/.scripts/polybar_launch.sh
-exec --no-startup-id ~/.scripts/generate_wallpapers.sh
+exec_always --no-startup-id ~/.scripts/polybar_launch.sh
+exec_always --no-startup-id ~/.scripts/enable_numpad.sh
+exec_always --no-startup-id ~/.scripts/generate_wallpapers.sh
 exec_always --no-startup-id autorandr -c
 exec --no-startup-id redshift-gtk &
 exec_always --no-startup-id nm-applet --sm-disable
@@ -168,10 +169,10 @@ bindsym $super+l exec --no-startup-id dm-tool lock
 bindsym $super+Shift+w exec --no-startup-id firefox
 bindsym $super+Shift+f exec --no-startup-id thunar
 # bindsym $super+Shift+g exec --no-startup-id geany
-bindsym $super+w exec --no-startup-id i3-msg open
+# bindsym $super+w exec --no-startup-id i3-msg open
 
 # kill focused window
-bindsym $super+c kill
+# bindsym $super+c kill
 bindsym $alt+F4 kill
 
 # change focus
