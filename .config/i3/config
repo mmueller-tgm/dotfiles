@@ -1,0 +1,343 @@
+# vim: filetype=i3
+# This is Maximilian Müllers i3-gaps Configuration. It has been inspired by luke@lukesmith.xyz and Adhi Pambudi
+
+# define variables
+set $ws1 "1"
+set $ws2 "2"
+set $ws3 "3"
+set $ws4 "4"
+set $ws5 "5"
+set $ws6 "6"
+set $ws7 "7"
+set $ws8 "8"
+set $ws9 "9"
+set $ws10 "10"
+# set modifier
+set $super Mod4
+set $alt Mod1
+
+# set font
+font pango: Noto Sans 14
+
+# Use Mouse+$super to drag floating windows to their wanted position
+floating_modifier $super
+
+#autostart
+exec --no-startup-id xsettingsd &
+exec --no-startup-id compton -b
+exec --no-startup-id ~/.scripts/polybar_launch.sh
+exec --no-startup-id ~/.scripts/generate_wallpapers.sh
+exec_always --no-startup-id autorandr -c
+exec --no-startup-id redshift-gtk &
+exec_always --no-startup-id nm-applet --sm-disable
+exec_always --no-startup-id "setxkbmap -layout de,us -variant ,, -option grp:rctrl_rshift_toggle"
+
+# # panel
+# bar {
+# 	colors {
+#         background #2f343f
+#         statusline #2f343f
+#         separator #4b5262
+#
+# 		# colour of border, background, and text
+#         focused_workspace	#2f343f	#bf616a	#d8dee8
+#         active_workspace	#2f343f	#2f343f	#d8dee8
+#         inactive_workspace	#2f343f	#2f343f	#d8dee8
+#         urgent_workspace	#2f343f	#ebcb8b	#2f343f
+#     }
+# 	position top
+# 	tray_output primary
+#         status_command i3status
+# }
+#
+# window rules, you can find the window class using xprop
+for_window [class=".*"] border pixel 4
+# assign [class=URxvt] 1
+# assign [class=Firefox|Transmission-gtk] 2
+# assign [class=Thunar|File-roller] 3
+# assign [class=Geany|Evince|Gucharmap|Soffice|libreoffice*] 4
+# assign [class=Audacity|Vlc|mpv|Ghb|Xfburn|Gimp*|Inkscape] 5
+# assign [class=Lxappearance|System-config-printer.py|Lxtask|GParted|Pavucontrol|Exo-helper*|Lxrandr|Arandr] 6
+for_window [class=Viewnior|feh|Audacious|File-roller|Lxappearance|Lxtask|Pavucontrol|arandr] floating enable
+for_window [class=URxvt|Firefox|Geany|Evince|Soffice|libreoffice*|mpv|Ghb|Xfburn|Gimp*|Inkscape|Vlc|Lxappearance|Audacity] focus
+for_window [class=Xfburn|GParted|System-config-printer.py|Lxtask|Pavucontrol|Exo-helper*|Lxrandr|arandr] focus
+
+# colour of border, background, text, indicator, and child_border
+client.focused			#bf616a #2f343f #d8dee8 #4ee75e #f72337
+client.focused_inactive		#2f343f #2f343f #d8dee8 #2f343f #2f343f
+client.unfocused		#2f343f #2f343f #d8dee8 #2f343f #2f343f
+client.urgent			#2f343f #2f343f #d8dee8 #2f343f #2f343f
+client.placeholder		#2f343f #2f343f #d8dee8 #2f343f #2f343f
+client.background		#2f343f
+
+# #---Audio and Music Definitions---# #
+
+#For PULSEAUDIO/PAMIXER
+set $inc --no-startup-id pamixer --allow-boost -i 1
+set $biginc --no-startup-id pamixer --allow-boost -i 10
+set $dec --no-startup-id pamixer --allow-boost -d 1
+set $bigdec --no-startup-id pamixer --allow-boost -d 10
+set $mute --no-startup-id pamixer --allow-boost -t
+set $micmute --no-startup-id pamixer --allow-boost -t
+set $truemute --no-startup-id pamixer -m
+
+##For spotify
+set $music spotify
+set $pause dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.PlayPause
+set $trupause dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Pause
+set $play dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Play
+set $next dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Next
+set $prev dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Previous
+set $lilfor dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Seek
+set $bigfor dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Seek(
+
+# #---Custom Keys---# #
+## Gaps
+
+# Disable window titlebars entirely
+for_window [class="^.*"] border pixel 2
+
+# Set inner/outer gaps
+gaps inner 10
+gaps outer 0
+
+# Additionally, you can issue commands with the following syntax. This is useful to bind keys to changing the gap size.
+# gaps inner|outer current|all set|plus|minus <px>
+# gaps inner all set 10
+# gaps outer all plus 5
+
+# Smart gaps (gaps used if only more than one container on the workspace)
+# smart_gaps on
+
+# Smart borders (draw borders around container only if it is not the only container on this workspace)
+# on|no_gaps (on=always activate and no_gaps=only activate if the gap size to the edge of the screen is 0)
+smart_borders on
+
+# Press $mod+Shift+g to enter the gap mode. Choose o or i for modifying outer/inner gaps. Press one of + / - (in-/decrement for current workspace) or 0 (remove gaps for current workspace). If you also press Shift with these keys, the change will be global for all workspaces.
+set $mode_gaps Gaps: (o) outer, (i) inner
+set $mode_gaps_outer Outer Gaps: +|-|0 (local), Shift + +|-|0 (global)
+set $mode_gaps_inner Inner Gaps: +|-|0 (local), Shift + +|-|0 (global)
+bindsym $super+Shift+g mode "$mode_gaps"
+
+mode "$mode_gaps" {
+        bindsym o      mode "$mode_gaps_outer"
+        bindsym i      mode "$mode_gaps_inner"
+        bindsym Return mode "default"
+        bindsym Escape mode "default"
+}
+
+mode "$mode_gaps_inner" {
+        bindsym plus  gaps inner current plus 5
+        bindsym minus gaps inner current minus 5
+        bindsym 0     gaps inner current set 0
+
+        bindsym Shift+plus  gaps inner all plus 5
+        bindsym Shift+minus gaps inner all minus 5
+        bindsym Shift+0     gaps inner all set 0
+
+        bindsym Return mode "default"
+        bindsym Escape mode "default"
+}
+
+mode "$mode_gaps_outer" {
+        bindsym plus  gaps outer current plus 5
+        bindsym minus gaps outer current minus 5
+        bindsym 0     gaps outer current set 0
+
+        bindsym Shift+plus  gaps outer all plus 5
+        bindsym Shift+minus gaps outer all minus 5
+        bindsym Shift+0     gaps outer all set 0
+
+        bindsym Return mode "default"
+        bindsym Escape mode "default"
+}
+
+# start a terminal
+# bindsym $super+Return exec --no-startup-id i3-sensible-terminal
+bindsym $super+Return exec --no-startup-id termite
+
+# start dmenu (a program launcher)
+bindsym $super+Shift+d exec --no-startup-id i3-dmenu-desktop --dmenu="dmenu -i -fn 'Noto Sans:size=11'"
+bindsym $super+d exec --no-startup-id rofi -lines 12 -padding 18 -width 60 -location 0 -show drun -sidebar-mode -columns 3 -font 'Noto Sans 11'
+
+# # common apps keybinds
+bindsym Print exec xfce4-screenshooter
+bindsym Shift+Print exec xfce4-screenshooter -w
+bindsym $alt+Print exec xfce4-screenshooter -f
+bindsym $super+l exec --no-startup-id dm-tool lock
+bindsym $super+Shift+w exec --no-startup-id firefox
+bindsym $super+Shift+f exec --no-startup-id thunar
+# bindsym $super+Shift+g exec --no-startup-id geany
+bindsym $super+w exec --no-startup-id i3-msg open
+
+# kill focused window
+bindsym $super+c kill
+bindsym $alt+F4 kill
+
+# change focus
+bindsym $super+Left focus left
+bindsym $super+Down focus down
+bindsym $super+Up focus up
+bindsym $super+Right focus right
+
+# move focused window
+bindsym $super+Shift+Left move left
+bindsym $super+Shift+Down move down
+bindsym $super+Shift+Up move up
+bindsym $super+Shift+Right move right
+
+# split in horizontal orientation
+bindsym $super+h split h
+
+# split in vertical orientation
+bindsym $super+v split v
+
+# enter fullscreen mode for the focused container
+bindsym $super+f fullscreen toggle
+
+# change container layout split
+bindsym $super+s layout toggle split
+
+# toggle tiling / floating
+bindsym $super+space floating toggle
+
+# change focus between tiling / floating windows
+bindsym $super+Shift+space focus mode_toggle
+
+# switch to workspace
+bindsym $super+1		workspace $ws1
+bindsym $super+2		workspace $ws2
+bindsym $super+3		workspace $ws3
+bindsym $super+4		workspace $ws4
+bindsym $super+5		workspace $ws5
+bindsym $super+6		workspace $ws6
+bindsym $super+7		workspace $ws7
+bindsym $super+8		workspace $ws8
+bindsym $super+9		workspace $ws9
+bindsym $super+0		workspace $ws10
+
+# move focused container to workspace
+bindsym $super+Shift+1	move container to workspace $ws1
+bindsym $super+Shift+2	move container to workspace $ws2
+bindsym $super+Shift+3	move container to workspace $ws3
+bindsym $super+Shift+4	move container to workspace $ws4
+bindsym $super+Shift+5	move container to workspace $ws5
+bindsym $super+Shift+6	move container to workspace $ws6
+bindsym $super+Shift+7	move container to workspace $ws7
+bindsym $super+Shift+8	move container to workspace $ws8
+bindsym $super+Shift+9	move container to workspace $ws9
+bindsym $super+Shift+0 move container to workspace $ws10
+
+
+# move workspace to monitor
+bindsym $super+$alt+Left move workspace to output left
+bindsym $super+$alt+Right move workspace to output right
+
+
+# restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
+bindsym $super+Shift+r restart
+
+# exit i3
+bindsym $super+q exec --no-startup-id "i3-nagbar -t warning -m 'Really, exit?' -b 'Yes' 'i3-msg exit'"
+
+# resize window (you can also use the mouse for that)
+mode "resize" {
+        bindsym Left resize shrink width 5 px or 5 ppt
+        bindsym Down resize grow height 5 px or 5 ppt
+        bindsym Up resize shrink height 5 px or 5 ppt
+        bindsym Right resize grow width 5 px or 5 ppt
+
+        bindsym Shift+Left resize shrink width 20 px or 20 ppt
+        bindsym Shift+Down resize grow height 20 px or 20 ppt
+        bindsym Shift+Up resize shrink height 20 px or 20 ppt
+        bindsym Shift+Right resize grow width 20 px or 20 ppt
+        bindsym Return mode "default"
+}
+bindsym $super+r mode "resize"
+
+## Multimedia
+bindsym Control+F12		exec --no-startup-id $next
+bindsym Control+F11		exec --no-startup-id $pause
+bindsym Control+F10		exec --no-startup-id $prev
+
+# #---Extra XF86 Keys---# #
+# These are the extra media keys that some keyboards have.
+bindsym XF86AudioMute		exec --no-startup-id $mute
+bindsym XF86AudioLowerVolume	exec --no-startup-id $dec
+bindsym XF86AudioRaiseVolume	exec --no-startup-id $inc
+bindsym Shift+XF86AudioLowerVolume	exec --no-startup-id $bigdec
+bindsym Shift+XF86AudioRaiseVolume	exec --no-startup-id $biginc
+bindsym XF86PowerOff		exec --no-startup-id prompt "Are you sure you want to shutdown?" "$shutdown"
+##bindsym XF86Copy		exec --no-startup-id
+##bindsym XF86Open		exec --no-startup-id
+##bindsym XF86Paste		exec --no-startup-id
+##bindsym XF86Cut		exec --no-startup-id
+##bindsym XF86MenuKB		exec --no-startup-id
+bindsym XF86Calculator		exec --no-startup-id $term -e R -q
+bindsym XF86Sleep		exec --no-startup-id sudo zzz
+##bindsym XF86WakeUp		exec --no-startup-id
+bindsym XF86Explorer		exec --no-startup-id $term -e ranger
+##bindsym XF86Send		exec --no-startup-id
+##bindsym XF86Xfer		exec --no-startup-id
+bindsym XF86WWW			exec --no-startup-id $BROWSER
+##bindsym XF86DOS		exec --no-startup-id
+bindsym XF86ScreenSaver		exec --no-startup-id ~/.config/i3/lock.sh
+##bindsym XF86RotateWindows	exec --no-startup-id
+##bindsym XF86TaskPane		exec --no-startup-id
+##bindsym XF86Favorites		exec --no-startup-id
+bindsym XF86MyComputer		exec --no-startup-id $term -e ranger
+##bindsym XF86Back		exec --no-startup-id
+##bindsym XF86Forward		exec --no-startup-id
+bindsym XF86Eject		exec --no-startup-id sudo umount -R /mnt
+bindsym XF86AudioNext		exec --no-startup-id $next
+bindsym XF86AudioPlay		exec --no-startup-id $pause
+bindsym XF86AudioPrev		exec --no-startup-id $prev
+bindsym XF86AudioStop		exec --no-startup-id $pause
+##bindsym XF86AudioRecord
+bindsym XF86AudioRewind		exec --no-startup-id $lilbak
+bindsym XF86AudioForward	exec --no-startup-id $lilfor
+##bindsym XF86Phone		exec --no-startup-id
+##bindsym XF86Tools		exec --no-startup-id
+bindsym XF86HomePage		exec --no-startup-id $BROWSER https://mmueller.xyz
+bindsym XF86Reload		restart
+##bindsym XF86ScrollUp		exec --no-startup-id
+##bindsym XF86ScrollDown		exec --no-startup-id
+##bindsym XF86New		exec --no-startup-id
+##bindsym XF86LaunchA		exec --no-startup-id
+##bindsym XF86LaunchB		exec --no-startup-id
+##bindsym XF86Launch2		exec --no-startup-id
+##bindsym XF86Launch3		exec --no-startup-id
+##bindsym XF86Launch4		exec --no-startup-id
+##bindsym XF86Launch5		exec --no-startup-id
+##bindsym XF86Launch6		exec --no-startup-id
+##bindsym XF86Launch7		exec --no-startup-id
+##bindsym XF86Launch8		exec --no-startup-id
+##bindsym XF86Launch9		exec --no-startup-id
+bindsym XF86AudioMicMute	exec --no-startup-id $micmute
+##bindsym XF86TouchpadToggle	exec --no-startup-id
+bindsym XF86TouchpadOn		exec --no-startup-id synclient TouchpadOff=0
+bindsym XF86TouchpadOff		exec --no-startup-id synclient TouchpadOff=1
+bindsym XF86Suspend		exec --no-startup-id ~/.config/i3/lock.sh
+bindsym XF86Close		kill
+bindsym XF86WebCam		exec --no-startup-id camtoggle
+bindsym XF86Mail		exec --no-startup-id $term -e neomutt
+bindsym XF86Messenger		exec --no-startup-id $term -e weechat
+bindsym XF86Search		exec --no-startup-id $BROWSER https://duckduckgo.com
+##bindsym XF86Go			exec --no-startup-id
+##bindsym XF86Finance		exec --no-startup-id
+##bindsym XF86Game		exec --no-startup-id
+bindsym XF86Shop		exec --no-startup-id 
+bindsym XF86MonBrightnessDown	exec --no-startup-id xbacklight -dec 5
+bindsym XF86MonBrightnessUp	exec --no-startup-id xbacklight -inc 5
+bindsym XF86AudioMedia		exec --no-startup-id $music
+bindsym XF86Display		exec --no-startup-id arandr
+##bindsym XF86KbdLightOnOff	exec --no-startup-id
+#bindsym XF86KbdBrightnessDown	exec --no-startup-id xbacklight -dec 20 # decrease screen brightness
+#bindsym XF86KbdBrightnessUp	exec --no-startup-id xbacklight -inc 20 # increase screen brightness
+##bindsym XF86Reply		exec --no-startup-id
+##bindsym XF86MailForward	exec --no-startup-id
+##bindsym XF86Save		exec --no-startup-id
+bindsym XF86Documents		exec --no-startup-id $term -e ranger ~/Documents
+##bindsym XF86Battery		exec --no-startup-id
+##bindsym XF86Bluetooth		exec --no-startup-id
+bindsym XF86WLAN		exec --no-startup-id $netrefresh
