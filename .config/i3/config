@@ -25,11 +25,13 @@ floating_modifier $super
 #autostart
 exec --no-startup-id xsettingsd &
 exec --no-startup-id compton -b
-exec_always --no-startup-id ~/.scripts/polybar_launch.sh
-exec_always --no-startup-id ~/.scripts/enable_numpad.sh
-exec_always --no-startup-id ~/.scripts/generate_wallpapers.sh
+exec --no-startup-id light-locker &
+exec_always --no-startup-id ~/.scripts/polybar_launch.sh &
+exec_always --no-startup-id ~/.scripts/enable_numpad.sh &
+exec_always --no-startup-id ~/.scripts/generate_wallpapers.sh &
 exec_always --no-startup-id autorandr -c
 exec --no-startup-id redshift-gtk &
+exec_always --no-startup-id xfce4-power-manager &
 exec_always --no-startup-id nm-applet --sm-disable
 exec_always --no-startup-id "setxkbmap -layout de,us -variant ,, -option grp:rctrl_rshift_toggle"
 
@@ -165,7 +167,7 @@ bindsym $super+d exec --no-startup-id rofi -lines 12 -padding 18 -width 60 -loca
 bindsym Print exec xfce4-screenshooter
 bindsym Shift+Print exec xfce4-screenshooter -w
 bindsym $alt+Print exec xfce4-screenshooter -f
-bindsym $super+l exec --no-startup-id dm-tool lock
+bindsym $super+l exec --no-startup-id light-locker-command -l
 bindsym $super+Shift+w exec --no-startup-id firefox
 bindsym $super+Shift+f exec --no-startup-id thunar
 # bindsym $super+Shift+g exec --no-startup-id geany

@@ -111,3 +111,9 @@ dmenu.background:	        #2e3440
 dmenu.selbackground:	    #bf616a
 dmenu.foreground:	        #d8dee9
                                                            
+
+! ------------------------------------------------------------------------------
+! Xscreensaver
+! ------------------------------------------------------------------------------
+
+xscreensaver.newLoginCommand: dm-tool switch-to-greeter
