@@ -101,8 +101,8 @@ set $bigfor dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/m
 for_window [class="^.*"] border pixel 2
 
 # Set inner/outer gaps
-gaps inner 5
-gaps outer 0
+gaps inner 10
+gaps outer 30
 
 # Additionally, you can issue commands with the following syntax. This is useful to bind keys to changing the gap size.
 # gaps inner|outer current|all set|plus|minus <px>
@@ -329,7 +329,7 @@ bindsym XF86Search		exec --no-startup-id $BROWSER https://duckduckgo.com
 ##bindsym XF86Go			exec --no-startup-id
 ##bindsym XF86Finance		exec --no-startup-id
 ##bindsym XF86Game		exec --no-startup-id
-bindsym XF86Shop		exec --no-startup-id 
+bindsym XF86Shop		exec --no-startup-id
 bindsym XF86MonBrightnessDown	exec --no-startup-id xbacklight -dec 5
 bindsym XF86MonBrightnessUp	exec --no-startup-id xbacklight -inc 5
 bindsym XF86AudioMedia		exec --no-startup-id $music
