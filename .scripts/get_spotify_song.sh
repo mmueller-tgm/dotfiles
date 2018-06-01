@@ -25,12 +25,16 @@ try:
     artist = metadata['xesam:artist'][0]
     song = metadata['xesam:title']
 
-    if len(song) > trunclen:
-        song = song[0:trunclen]
+    if len(song)+len(artist) > trunclen:
+        song = song[0:trunclen-3]
         song += '...'
         if ('(' in song) and (')' not in song):
             song += ')'
-    output = artist + ': ' + song
+
+    if artist != '':
+        output = artist + ': ' + song
+    else:
+        output = song
 
     # Python3 uses UTF-8 by default.
     if sys.version_info.major == 3:
