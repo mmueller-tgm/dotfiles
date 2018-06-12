@@ -1,16 +1,31 @@
-#!/bin/sh
-#!/usr/bin/env sh
+#!/usr/bin/env bash
+
+notify-send -u low "autorandr: restarting polybar"
 
 # Terminate already running bar instances
 killall -q polybar
 
 # Wait until the processes have been shut down
-while pgrep -x polybar >/dev/null; do sleep 1; done
+while pgrep -u $UID -x polybar >/dev/null
+do
+    sleep 1
+done
 
-# Launch bar1 and bar2
-#polybar example &
+# determine if this is a laptop
+acpi | grep Battery > /dev/null 2> /dev/null
+is_laptop=$?
 
-for i in $(polybar -m | awk -F: '{print $1}'); do MONITOR=$i polybar example -c ~/.config/polybar/config & done
-# feh --bg-scale ~/.config/wall.png
+if [ $is_laptop -eq 0 ]
+then
+    bar="laptop"
+else
+    bar="desktop"
+fi
+
+for i in $(polybar -m | awk -F: '{print $1}'); do
+    MONITOR=$i polybar --reload "${bar}" >> /tmp/polybar-$i.log 2>&1 &
+done
 
 echo "Bars launched..."
+
+notify-send -u low "autorandr: restarted polybar"

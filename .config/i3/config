@@ -26,10 +26,9 @@ floating_modifier $super
 exec --no-startup-id xsettingsd &
 exec --no-startup-id compton -b
 exec --no-startup-id light-locker &
-exec_always --no-startup-id ~/.scripts/polybar_launch.sh &
 exec_always --no-startup-id ~/.scripts/enable_numpad.sh &
 exec_always --no-startup-id ~/.scripts/generate_wallpapers.sh &
-exec_always --no-startup-id autorandr -c
+exec_always --no-startup-id ~/.scripts/polybar_launch.sh
 exec --no-startup-id redshift-gtk &
 exec_always --no-startup-id xfce4-power-manager &
 exec_always --no-startup-id nm-applet --sm-disable
