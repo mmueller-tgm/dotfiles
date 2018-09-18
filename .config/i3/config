@@ -101,7 +101,7 @@ for_window [class="^.*"] border pixel 2
 
 # Set inner/outer gaps
 gaps inner 10
-gaps outer 30
+gaps outer -5
 
 # Additionally, you can issue commands with the following syntax. This is useful to bind keys to changing the gap size.
 # gaps inner|outer current|all set|plus|minus <px>
@@ -169,6 +169,7 @@ bindsym $alt+Print exec xfce4-screenshooter -f
 bindsym $super+l exec --no-startup-id light-locker-command -l
 bindsym $super+Shift+w exec --no-startup-id firefox
 bindsym $super+Shift+f exec --no-startup-id thunar
+bindsym $super+t exec --no-startup-id pavucontrol
 # bindsym $super+Shift+g exec --no-startup-id geany
 # bindsym $super+w exec --no-startup-id i3-msg open
 

@@ -70,7 +70,6 @@ plugins=(
   archlinux
   npm
   mvn
-  nyan
   jsontools
   thefuck
   heroku
